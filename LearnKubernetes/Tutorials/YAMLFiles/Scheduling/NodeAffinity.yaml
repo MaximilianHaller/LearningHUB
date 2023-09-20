@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: data-processor
+  labels:
+    name: data-processor
+spec:
+  containers:
+  - name: data-processor
+    image: nginx
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+  affinity: # Node Affinity can do the same as NodeSelector but with conditions and syntax and more options.
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: size
+          operator: In
+          value:
+          - Large

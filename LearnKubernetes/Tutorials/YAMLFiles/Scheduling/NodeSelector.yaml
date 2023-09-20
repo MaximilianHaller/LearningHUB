@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: data-processor
+  labels:
+    name: data-processor
+spec:
+  containers:
+  - name: data-processor
+    image: nginx
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+  nodeSelector: ## Node Selector is used to tell a pod that it needs to use a certain Node. In that case it uses the node with the label "size=Large". You need to label a node first (kubectl label nodes nodename size=Large) 
+    size: Large
