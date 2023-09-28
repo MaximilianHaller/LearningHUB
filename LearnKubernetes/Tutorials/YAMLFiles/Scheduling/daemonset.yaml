@@ -1,0 +1,17 @@
+## daemonset schedules one instance of a pod on every node of the cluster
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: daemonset-test
+spec:
+  selector:
+      matchLabels:
+        name: nginx-test
+  template:
+    metadata:
+      labels:
+        name: nginx-test
+    spec:
+      containers:
+        - name: nginx-container
+          image: nginx

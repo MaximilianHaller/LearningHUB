@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginxsleeper
+spec:
+  selector:
+    matchLabels:
+      app: nginxsleeper
+  template:
+    metadata:
+      labels:
+        app: nginxsleeper
+    spec:
+      containers:
+      - name: nginxsleeper
+        image: nginx
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+        command: ["sleep"] ### Equal to ENTRYPOINT in Dockerfile
+        args: ["10"] ### Equal to CMD in Dockerfile
+        env:
+          - name: JAVA_HOME
+            value: /usr/bin/java
+          - name: APP_COLOR
+            value: blue
+        envFrom:
+          - configMapRef:
+              name: nginx-configmap
+          - secretRef:
+              name: nginx-secrets
+
+
